@@ -1,0 +1,132 @@
+# Investigation Notes
+
+## Lab Summary
+In this lab,  we understood Windows SMB shares and SMB session analysis using Windows PowerShell.
+
+The investigation demonstrated how shared folders are created, validated, and examined while introducing the commands used to investigate SMB sessions and server configuration.
+
+---
+
+## Analyst Methodology
+
+1. Create investigation folder.
+2. Create sample files.
+3. Create SMB share.
+4. Validation of share creation.
+5. Access shared folder.
+6. Listing SMB shares.
+7. Review SMB sessions.
+8. Review SMB open files.
+9.Check SMB server configuration.
+
+
+---
+
+## Investigation Scenario
+
+Suppose an employee reports that confidential files disappeared from a shared folder.
+
+As a DFIR analyst, we need to determine:
+
+Was someone connected to the server?
+Which user established the connection?
+Was the session still active?
+Was it a legitimate user?
+
+---
+
+## Evidence Collected
+
+### Evidence 1 
+
+Collected:
+
+- SMBLab directory
+- Sample files
+
+Finding:
+
+We have established baseline for this lab.
+
+---
+
+### Evidence 2 
+
+Command Used
+
+```powershell
+New-SmbShare -Name DFIRShare -Path C:\SMBLab -FullAccess Everyone
+```
+
+Finding:
+
+Successfully created a Windows SMB share.
+
+---
+
+### Evidence 3 
+
+Command Used
+
+```powershell
+Get-SmbShare
+```
+
+Finding:
+
+Verified the presence of DFIRShare.
+
+---
+
+### Evidence 4 
+
+Command Used
+
+```powershell
+Get-SmbSession
+```
+
+Finding:
+
+No active SMB session during localhost testing. 
+
+---
+
+### Evidence 5 
+
+Command Used
+
+```powershell
+Get-SmbOpenFile
+```
+
+Finding:
+
+No active SMB file handles during local testing.
+
+---
+
+### Evidence 6 
+
+Command Used
+
+```powershell
+Get-SmbServerConfiguration
+```
+
+Finding:
+
+We have reviewed Windows SMB protocol configuration
+
+---
+
+
+## MITRE ATT&CK Mapping
+
+| Tactic | Technique | ID |
+|---------|-----------|----|
+| Lateral Movement | SMB/Windows Admin Shares | T1021.002 |
+| Collection | Data from Network Shared Drive | T1039 |
+
+---
+
